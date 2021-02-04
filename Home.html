@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css"
+        integrity="sha512-QfDd74mlg8afgSqm3Vq2Q65e9b3xMhJB4GZ9OcHDVy1hZ6pqBJPWWnMsKDXM7NINoKqJANNGBuVRIpIJ5dogfA=="
+        crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.1/css/all.min.css" integrity="sha512-9my9Mb2+0YO+I4PUCSwUYO7sEK21Y0STBAiFEYoWtd2VzLEZZ4QARDrZ30hdM1GlioHJ8o8cWQiy8IAb1hy/Hg==" crossorigin="anonymous" /> -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        p {
+            font-size: 0.8rem;
+        }
+
+        h2 {
+            margin: 5px;
+        }
+
+        h3 {
+            margin-bottom: 8px;
+        }
+
+        body {
+            background-color: rgb(119, 149, 236);
+        }
+
+        .container {
+            position: absolute;
+            width: 250px;
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(36, 128, 204);
+            border-radius: 20px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .weathercon {
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .info {
+            height: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* background-color: red; */
+        }
+
+        .fas {
+            animation: mode 3s linear infinite alternate;
+            font-size: 25px;
+        }
+
+        .loc_icon {
+            color: #2c3e50;
+            animation: people 2s linear infinite alternate;
+            margin-right: 2px;
+        }
+
+        .wave-one {
+            width: 400px;
+            height: 360px;
+            background-color: #ecf0f1;
+            position: absolute;
+            bottom: -150px;
+            opacity: 0.5;
+            left: -30%;
+            transform: translate(-50%, 0%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: wave 2s linear infinite normal;
+        }
+
+        .wave-two {
+            width: 400px;
+            height: 370px;
+            background-color: #ecf0f1;
+            position: absolute;
+            bottom: -155px;
+            opacity: 0.2;
+            left: -30%;
+            transform: translate(-50%, 0%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: wave 2.5s linear infinite normal;
+        }
+
+        .wave-three {
+            width: 400px;
+            height: 380px;
+            background-color: #ecf0f1;
+            position: absolute;
+            bottom: -165px;
+            opacity: 0.3;
+            left: -30%;
+            transform: translate(-50%, 0%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: wave 1.8s ease-in infinite normal;
+        }
+
+        /* animation */
+        @keyframes wave {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes people {
+            from {
+                transform: translate(-0.5rem);
+            }
+
+            to {
+                transform: translateX(0.5rem);
+            }
+        }
+
+        @keyframes mode {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.8);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="wave-one"></div>
+        <div class="wave-two"></div>
+        <div class="wave-three"></div>
+        <div class="weathercon">
+            <!-- <i class="fas fa-sun"></i> -->
+            <!-- <i class="fas fa-cloud"></i> -->
+        </div>
+        <div class="info">
+            <h3 class="location"><i class="fas fa-street-view loc_icon"></i> {%temp_loc%},{%temp_country%}</h3>
+            <p id="dates">WED | OCT 23 | 10:49AM</p>
+            <h2 class="temp">{%temperature%}</h2>
+            <h5 class="tempmin_max">Min {%temp_min%} &nbsp Max {%temp_max%}</h5>
+        </div>
+    </div>
+</body>
+<!-- <script src="my.js"></script> -->
+<script>
+    var mydate = document.getElementById("dates");
+    var temp_status = document.getElementsByClassName("weathercon");
+    var d = new Date();
+
+    // Temparature mode
+    var temp_mode = "{%temp_mood%}";
+    if (temp_mode.toLowerCase() == "cloud") {
+        temp_status[0].innerHTML = '<i class="fas fa-cloud" style="color:#ecf0f1;"></i>';
+    }
+    else if (temp_mode.toLowerCase() == "rainy") {
+        temp_status[0].innerHTML = '<i class="fas fa-cloud-rain" style="color:#222f3e;"></i>';
+    }
+    else if (temp_mode.toLowerCase() == "sunny") {
+        temp_status[0].innerHTML = '<i class="fas fa-sun" style="color:yellow;"></i>';
+    }
+    else {
+        console.log("else");
+        temp_status[0].innerHTML = '<i class="fas fa-cloud" style="color:#fad390;"></i><i class="fas fa-cloud" style="color:#ecf0f1;font-size:16px;"></i>';
+        // temp_status[0].innerHTML = '<i class="fas fa-clouds-sun" style="color:#fad390;"></i>';
+    }
+
+    const nowWeekDay = () => {
+        // week day name 
+        var week_day = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+        var day_name = week_day[d.getDate()];
+        console.log("Today is: " + day_name);
+        return `${day_name}`;
+    }
+    const nowDate = () => {
+        // month and date 
+        var aMonth = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+        var month_name = aMonth[d.getMonth()];
+
+        //date
+        var date = d.getDate();
+        return `${month_name} ${date}`;
+    }
+    const nowTime = () => {
+        // time 
+        var hour = d.getHours();
+        var mins = "";
+        var mode = "";
+        if (hour > 12) {
+            hour -= 12;
+            mode = "PM";
+        }
+        else {
+            mode = "AM";
+        }
+        if (mins < 10) {
+            mins = "0" + d.getMinutes();
+        }
+        return `${hour}:${mins} ${mode}`;
+    }
+    // nowWeekDay();
+    // nowDate();
+    // nowTime();
+    mydate.innerHTML = `${nowWeekDay()} | ${nowDate()} | ${nowTime()}`;
+</script>
+
+</html>
